@@ -21,10 +21,11 @@ public class QueueApplication
 }
 class InterviewQueue {
     int candidates;
+    Scanner sc = new Scanner(System.in);
 
+    //number of candidates in the reception initially
     public void receptionQueue(Queue<Integer> reception)
     {
-        Scanner sc = new Scanner(System.in);
         System.out.println("Enter the no. of Candidates ");
         candidates = sc.nextInt();
         for (int i = 1; i <= candidates; i++)
@@ -34,9 +35,10 @@ class InterviewQueue {
 
     }
 
+    //number of candidates in the waiting hall before starting interview
     public void waitingQueue(Queue<Integer> waiting, Queue<Integer> reception)
     {
-        Scanner sc = new Scanner(System.in);
+
         System.out.println("Enter the no. of candidates allowed to the waiting hall");
         int wait_candidates = sc.nextInt();
         for (int i = 1; i <= wait_candidates; i++)
@@ -48,31 +50,33 @@ class InterviewQueue {
 
     public void interviewRoom(Queue<Integer> reception, Queue<Integer> waiting)
     {
-        int interviewperson = 0;
-
-        for (int j = 0; j < candidates; j++)
+        System.out.println("INTERVIEW STARTS\n");
+        //After starting the interview, candidates entering the interview room
+        for (int i = 0; i < candidates; i++)
         {
-            for (int i = 0; i < waiting.size(); i++)
-            {
-                interviewperson = waiting.peek();
-            }
-            System.out.print("In the Interview Room: " + interviewperson + "\n");
-            waiting.remove();
-            if (reception.size() <= 0) 
-            {
-                System.out.println("Candidates in the Waiting hall --> " + waiting);
-                System.out.println("Candidates in the Reception --> " + reception);
-                System.out.println();
-            } 
-            else 
-            {
-                int temp = reception.remove();
-                waiting.add(temp);
-                System.out.println("Candidates in the Waiting hall --> " + waiting);
-                System.out.println("Candidates in the Reception --> " + reception);
-                System.out.println();
-            }
-        }
+             int interviewperson = waiting.peek();
 
+            System.out.print("Interview Room: " + interviewperson + " IN\n");
+            waiting.remove();
+
+            //Removing candidates from the reception and adding to the waiting hall
+            if(reception.size() > 0)
+            {
+//                int temp = reception.remove();
+//                waiting.add(temp);
+                waiting.add(reception.remove());
+                System.out.println("Candidates in the Waiting hall --> " + waiting);
+                System.out.println("Candidates in the Reception --> " + reception);
+                System.out.println();
+            }
+            else
+            {
+                System.out.println("Candidates in the Waiting hall --> " + waiting);
+                System.out.println("Candidates in the Reception --> " + reception);
+                System.out.println();
+            }
+            System.out.println(interviewperson + " --> OUT from Interview Room\n");
+        }
+        System.out.println("INTERVIEW ENDS");
     }
 }
